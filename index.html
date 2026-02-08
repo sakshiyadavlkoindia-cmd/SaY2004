@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yadav Family Survey</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ff9933, #ffffff, #138808); /* Saffron, white, green - Indian flag colors */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #ff9933;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px #138808;
+        }
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff9933;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #138808;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ff9933;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background: #138808;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        button:hover {
+            background: #ff9933;
+            color: #138808;
+        }
+        .lucknow-note {
+            font-style: italic;
+            color: #ff9933;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Yadav Family Survey</h1>
+    <p class="lucknow-note">From the heart of Lucknow - City of Nawabs!</p>
+    <form id="surveyForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="officialName">Official Name (Aadhaar):</label>
+        <input type="text" id="officialName" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" required min="1">
+
+        <label for="occupation">Occupation:</label>
+        <input type="text" id="occupation" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required>
+
+        <label for="platform">Choose Streaming Platform:</label>
+        <select id="platform" required>
+            <option value="">Select</option>
+            <option value="PrimeVideo">1. PrimeVideo</option>
+            <option value="Netflix">2. Netflix</option>
+            <option value="DisneyHotstar">3. DisneyHotstar</option>
+        </select>
+
+        <label for="politician">Favourite Politician:</label>
+        <input type="text" id="politician" required>
+
+        <label for="dreamCity">Dream City:</label>
+        <input type="text" id="dreamCity" required>
+
+        <label for="dreamCountry">Dream Country:</label>
+        <input type="text" id="dreamCountry" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                officialName: document.getElementById('officialName').value,
+                age: document.getElementById('age').value,
+                occupation: document.getElementById('occupation').value,
+                address: document.getElementById('address').value,
+                platform: document.getElementById('platform').value,
+                politician: document.getElementById('politician').value,
+                dreamCity: document.getElementById('dreamCity').value,
+                dreamCountry: document.getElementById('dreamCountry').value
+            };
+            try {
+                const response = await fetch('http://127.0.0.1:5000/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    alert('Survey submitted successfully!');
+                    document.getElementById('surveyForm').reset();
+                } else {
+                    alert('Error submitting survey.');
+                }
+            } catch (error) {
+                alert('Network error: ' + error);
+            }
+        });
+    </script>
+</body>
+</html>
